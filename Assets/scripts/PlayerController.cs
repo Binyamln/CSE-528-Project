@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
             Dash();
             lastDashTime = Time.time;
         }
+        if (current_health <= 0) {
+            Debug.Log("The Cat Dies!!!");
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -47,8 +51,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Updated method to take damage using integer health
-    public void TakeDamage(int damage)
+     public void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
@@ -71,6 +74,10 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Damage") {
             damage += 10;
             Debug.Log("Damage: " + damage);
+        }
+        if (collision.tag == "Enemy") {
+            current_health -= 20;
+            Debug.Log("Health: " + current_health);
         }
     }
 }
