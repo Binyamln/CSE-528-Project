@@ -4,12 +4,10 @@ using System.Collections.Generic;
 public class TeleportTrigger : MonoBehaviour
 {
     private Transform[] spawnpoints; // Array to hold references to the Spawnpoint objects
-    private Transform previousRoom; // Store the previously visited room
-    private Transform currentRoom; // Store the current room
+    private List<Transform> visitedRooms = new List<Transform>(); // Store the previously visited rooms
 
     private void Start()
     {
-
         GameObject spawnpointManager = GameObject.Find("SpawnPointsManager");
 
         if (spawnpointManager != null)
@@ -28,13 +26,9 @@ public class TeleportTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player"))
         {
-            
-            previousRoom = currentRoom;
-            currentRoom = transform.parent;
-
-            TeleportPlayer(other.transform); 
+            TeleportPlayer(other.transform);
         }
     }
 
@@ -46,24 +40,34 @@ public class TeleportTrigger : MonoBehaviour
             return;
         }
 
-        List<Transform> availableSpawnpoints = new List<Transform>();
-        foreach (Transform spawnpoint in spawnpoints)
+        // Determine available spawn points excluding the current room
+        List<Transform> availableSpawnpoints = new List<Transform>(spawnpoints);
+        if (visitedRooms.Count > 0)
         {
-            if (spawnpoint != currentRoom && spawnpoint != previousRoom)
+            // Exclude the most recently visited rooms to prevent immediate backtracking
+            foreach (Transform visitedRoom in visitedRooms)
             {
-                availableSpawnpoints.Add(spawnpoint);
+                availableSpawnpoints.Remove(visitedRoom);
             }
         }
 
-        if (availableSpawnpoints.Count == 0)
+        // Select a new random spawnpoint from the available ones
+        if (availableSpawnpoints.Count > 0)
         {
-            Debug.LogWarning("No available spawnpoints found!");
-            return;
+            Transform newRoom = availableSpawnpoints[Random.Range(0, availableSpawnpoints.Count)];
+            playerTransform.position = newRoom.position;
+
+            // Manage visited rooms history
+            visitedRooms.Add(newRoom);
+            // Optionally limit the memory of visited rooms, for example remember only the last 2 rooms
+            if (visitedRooms.Count > 2) // Adjust this number based on your game's requirements
+            {
+                visitedRooms.RemoveAt(0); // Removes the oldest room from the list
+            }
         }
-
-        int randomIndex = Random.Range(0, availableSpawnpoints.Count);
-        Transform randomSpawnpoint = availableSpawnpoints[randomIndex];
-
-        playerTransform.position = randomSpawnpoint.position;
+        else
+        {
+            Debug.LogWarning("No available spawnpoints found, possibly all have been visited.");
+        }
     }
 }
