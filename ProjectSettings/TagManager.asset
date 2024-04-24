@@ -9,6 +9,7 @@ TagManager:
   - Speed
   - Enemy
   - Sword
+  - Title
   layers:
   - Default
   - TransparentFX
