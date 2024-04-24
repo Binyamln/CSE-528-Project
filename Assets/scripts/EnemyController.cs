@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     private float currentHealth;
 
     private PlayerController pc;
+    private TeleportTrigger tpTrigger;
 
     public float moveSpeed = 2f;
     public float attackRange = 1.5f;
@@ -14,13 +15,17 @@ public class EnemyController : MonoBehaviour
     private Transform playerTransform;
     private NavMeshAgent agent;
 
-void Start()
-{
-    currentHealth = maxHealth;
-    agent = GetComponent<NavMeshAgent>();
-    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    pc = playerTransform.GetComponent<PlayerController>();
-}
+    private GameObject[] enemies;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+        agent = GetComponent<NavMeshAgent>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        pc = playerTransform.GetComponent<PlayerController>();
+
+        Spawn();
+    }
 
     void Update()
     {
@@ -29,7 +34,7 @@ void Start()
         if (distanceToPlayer <= attackRange)
         {
             // attack the player
-            pc.TakeDamage(10); 
+            pc.TakeDamage(10);
         }
         else
         {
@@ -46,4 +51,18 @@ void Start()
             Destroy(gameObject);
         }
     }
+
+    private void Spawn()
+    {
+        /* Spawn enemies in random positions */
+
+        float randomX = Random.Range(-5f, 5f);
+        float randomY = Random.Range(-5f,5f);
+        Vector2 spawnPosition = new Vector2(randomX, randomY);
+        /* Spawn up to 5 enemies */
+        GameObject enemy = enemies[Random.Range(0,5)];
+ 
+        Instantiate(enemy, spawnPosition, Quaternion.identity);
+    }
+
 }
