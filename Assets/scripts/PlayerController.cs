@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
+    private Animator animator;
     public float speed = 5.0f; // Speed of the player's movement
     public float dashDistance = 10.0f; // Distance of the dash
     public float dashCooldown = 1.0f; // Time between dashes
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -25,7 +28,7 @@ public class PlayerController : MonoBehaviour
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
         moveInput.Normalize();
-
+        animator.SetFloat("MoveX", moveInput.x);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastDashTime + dashCooldown)
         {
             Dash();
