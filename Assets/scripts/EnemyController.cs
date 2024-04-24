@@ -16,9 +16,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField] Transform goal;
     private GameObject[] enemies;
-    public GameObject speedItem;
-    public GameObject healthItem;
-    public GameObject damageItem;
+    [SerializeField] GameObject[] items;
 
     void Start()
     {
