@@ -14,19 +14,16 @@ public class EnemyController : MonoBehaviour
 
     private Transform playerTransform;
     private NavMeshAgent agent;
-    [SerializeField] Transform goal;
 
     private GameObject[] enemies;
 
     void Start()
     {
         currentHealth = maxHealth;
-        //agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         pc = playerTransform.GetComponent<PlayerController>();
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; 
-        agent.updateUpAxis = false;
+
         Spawn();
     }
 
@@ -41,9 +38,8 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            agent.SetDestination(goal.position);
+            agent.SetDestination(playerTransform.position);
         }
-        agent.destination = goal.position;
     }
 
     public void TakeDamage(float damage)
