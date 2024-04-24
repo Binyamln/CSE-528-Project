@@ -14,12 +14,13 @@ public class EnemyController : MonoBehaviour
     private Transform playerTransform;
     private NavMeshAgent agent;
 
-    void Start()
-    {
-        currentHealth = maxHealth;
-        agent = GetComponent<NavMeshAgent>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-    }
+void Start()
+{
+    currentHealth = maxHealth;
+    agent = GetComponent<NavMeshAgent>();
+    playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    pc = playerTransform.GetComponent<PlayerController>();
+}
 
     void Update()
     {
@@ -28,7 +29,7 @@ public class EnemyController : MonoBehaviour
         if (distanceToPlayer <= attackRange)
         {
             // attack the player
-            pc.TakeDamage(10.0f);
+            pc.TakeDamage(10); 
         }
         else
         {

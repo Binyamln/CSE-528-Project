@@ -12,8 +12,7 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 desiredPosition = BetaCat.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        // Keep the camera's original z-axis value constant
-        smoothedPosition.z = transform.position.z; // Ensure the Z position is not changed.
+        smoothedPosition.z = transform.position.z;
         transform.position = smoothedPosition;
     }
 }
