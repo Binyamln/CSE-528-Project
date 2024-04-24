@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -5012282839788553138}
   - component: {fileID: -976932866432256186}
   - component: {fileID: 1246934062998993672}
+  - component: {fileID: 3142232643974332016}
   m_Layer: 0
   m_Name: TempEnemy
   m_TagString: Enemy
@@ -147,8 +148,32 @@ MonoBehaviour:
   current_health: 30
   moveSpeed: 2
   attackRange: 1.5
-  goal: {fileID: 0}
-  items:
-  - {fileID: 9182840980090019438, guid: bb93fb57c93b5364a83ceac8902f97dd, type: 3}
-  - {fileID: 8455253353311115856, guid: 9951916ab05c3514b8f5a54fe48379f1, type: 3}
-  - {fileID: 6467262237756605607, guid: 308538a05c752ca4c8be79d61dfd5618, type: 3}
+  wanderingRadius: 5
+  updateInterval: 1
+--- !u!50 &3142232643974332016
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6560956622339988509}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
