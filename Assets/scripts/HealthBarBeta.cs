@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBarBeta : MonoBehaviour
 {
-    //public Slider HealthBar;
+    public Slider HealthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +16,6 @@ public class HealthBarBeta : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    //    HealthBar.value = GameObject.Find("BetaCat").GetComponent<PlayerController>().playerHealth;
+        HealthBar.value = GameObject.Find("BetaCat").GetComponent<PlayerController>().current_health;
     }
 }

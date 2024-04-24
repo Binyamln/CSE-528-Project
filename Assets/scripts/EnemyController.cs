@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     private Transform playerTransform;
     private NavMeshAgent agent;
-
+    [SerializeField] Transform goal;
     private GameObject[] enemies;
 
     void Start()
@@ -23,7 +23,8 @@ public class EnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         pc = playerTransform.GetComponent<PlayerController>();
-
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         Spawn();
     }
 
@@ -34,11 +35,11 @@ public class EnemyController : MonoBehaviour
         if (distanceToPlayer <= attackRange)
         {
             // attack the player
-            pc.TakeDamage(10);
+            //pc.TakeDamage(10);
         }
         else
         {
-            agent.SetDestination(playerTransform.position);
+            agent.SetDestination(goal.position);
         }
     }
 

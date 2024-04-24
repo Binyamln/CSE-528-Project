@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,7 +34,9 @@ public class PlayerController : MonoBehaviour
         }
         if (current_health <= 0) {
             Debug.Log("The Cat Dies!!!");
+            SceneManager.LoadScene(sceneBuildIndex: 1);
             Destroy(gameObject);
+
         }
     }
 
@@ -56,6 +59,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
+            SceneManager.LoadScene(sceneName: "DeathScreen");
             Debug.Log("Player is dead!"); // Handle player death 
             
         }
