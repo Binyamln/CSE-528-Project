@@ -50,6 +50,9 @@ TagManager:
   - name: players
     uniqueID: 3221904591
     locked: 0
+  - name: reapons
+    uniqueID: 3336185197
+    locked: 0
   - name: tiles
     uniqueID: 982407551
     locked: 0

@@ -7,48 +7,45 @@ public class SwordController : MonoBehaviour
     public float visibleDelay = 0.5f;   // Time the sword remains visible after swinging
 
     private bool isSwinging = false;
+    private Renderer swordRenderer;     
 
     void Start()
     {
-        gameObject.SetActive(false);  // Start with the sword invisible
+        swordRenderer = GetComponent<Renderer>(); 
+        swordRenderer.enabled = false;  // Start with the sword invisible
     }
-void Update()
-{
-    if (Input.GetMouseButtonDown(0))
+
+    public void InitiateSwing(Vector2 direction)
     {
-        Debug.Log("Mouse Click Detected"); // Check if this logs when clicking
         if (!isSwinging)
         {
-            StartCoroutine(SwingSword());
+            StartCoroutine(SwingSword(direction));
         }
     }
-}
 
-
-IEnumerator SwingSword()
-{
-    isSwinging = true;
-    Debug.Log("Starting Swing");
-    gameObject.SetActive(true); // Make the sword visible
-
-    Quaternion startRotation = transform.rotation; // Store the starting rotation
-    Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, 180); // Target rotation after swing
-
-    float elapsed = 0;
-
-    while (elapsed < swingDuration)
+    IEnumerator SwingSword(Vector2 direction)
     {
-        transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / swingDuration);
-        elapsed += Time.deltaTime;
-        yield return null;
+        isSwinging = true;
+        swordRenderer.enabled = true;  // Make the sword visible
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90; // Calculate the angle
+        Quaternion startRotation = Quaternion.Euler(0, 0, angle);
+        Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, -90);  // Rotate -90 degrees from the start
+
+        transform.rotation = startRotation; 
+
+        float elapsed = 0;
+        while (elapsed < swingDuration)
+        {
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / swingDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = endRotation;  
+        yield return new WaitForSeconds(visibleDelay);  
+
+        swordRenderer.enabled = false;  // Make the sword invisible again
+        isSwinging = false;
     }
-
-    transform.rotation = endRotation; // Ensure the sword reaches the final rotation
-    yield return new WaitForSeconds(visibleDelay); // Keep the sword visible for a short delay
-
-    gameObject.SetActive(false); // Make the sword invisible again
-    transform.rotation = startRotation; // Reset rotation for next swing
-    isSwinging = false;
-    Debug.Log("Ending Swing");
-}
 }
