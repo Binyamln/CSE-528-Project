@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    private float currentHealth;
+    public int maxHealth = 30;
+    public int current_health = 30;
 
     private PlayerController pc;
     private TeleportTrigger tpTrigger;
@@ -16,10 +16,12 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField] Transform goal;
     private GameObject[] enemies;
+    public GameObject speedItem;
+    public GameObject healthItem;
+    public GameObject damageItem;
 
     void Start()
     {
-        currentHealth = maxHealth;
         agent = GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         pc = playerTransform.GetComponent<PlayerController>();
@@ -41,15 +43,15 @@ public class EnemyController : MonoBehaviour
         {
             agent.SetDestination(goal.position);
         }
+        if (current_health <= 0) {
+            Destroy(gameObject);
+        }
     }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            Destroy(gameObject);
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Sword") {
+            current_health -= 10;
+            Debug.Log("Enemy Health: " + current_health);
         }
     }
 
