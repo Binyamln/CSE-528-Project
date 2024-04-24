@@ -1,66 +1,69 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TeleportTrigger : MonoBehaviour
 {
-    private static GameObject[] roomPrefabs; 
-    public static GameObject currentRoom; 
-    private GameObject[] itemPrefabs; 
+    private Transform[] spawnpoints; // Array to hold references to the Spawnpoint objects
+    private Transform previousRoom; // Store the previously visited room
+    private Transform currentRoom; // Store the current room
 
-    void Start()
+    private void Start()
     {
-        if (roomPrefabs == null || roomPrefabs.Length == 0)
+
+        GameObject spawnpointManager = GameObject.Find("SpawnPointsManager");
+
+        if (spawnpointManager != null)
         {
-            roomPrefabs = Resources.LoadAll<GameObject>("roomPrefabs");
+            spawnpoints = new Transform[spawnpointManager.transform.childCount];
+            for (int i = 0; i < spawnpointManager.transform.childCount; i++)
+            {
+                spawnpoints[i] = spawnpointManager.transform.GetChild(i);
+            }
         }
-
-
-        itemPrefabs = Resources.LoadAll<GameObject>("Items");
+        else
+        {
+            Debug.LogError("SpawnpointManager not found!");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")){
-            TeleportPlayer();
+        if (other.CompareTag("Player")) 
+        {
+            
+            previousRoom = currentRoom;
+            currentRoom = transform.parent;
+
+            TeleportPlayer(other.transform); 
         }
     }
 
-    void TeleportPlayer()
+    private void TeleportPlayer(Transform playerTransform)
     {
-        if (roomPrefabs.Length == 0)
+        if (spawnpoints == null || spawnpoints.Length == 0)
         {
-            Debug.LogError("No room prefabs found. Please check your Resources/roomPrefabs directory.");
+            Debug.LogError("Spawnpoints not initialized!");
             return;
         }
 
-        if (currentRoom != null)
+        List<Transform> availableSpawnpoints = new List<Transform>();
+        foreach (Transform spawnpoint in spawnpoints)
         {
-            Destroy(currentRoom);
+            if (spawnpoint != currentRoom && spawnpoint != previousRoom)
+            {
+                availableSpawnpoints.Add(spawnpoint);
+            }
         }
 
-        GameObject roomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
-        currentRoom = Instantiate(roomPrefab, Vector3.zero, Quaternion.identity);
-
-        SpawnItemsInRoom(currentRoom);
-
-        Transform spawnPoint = currentRoom.transform.Find("SpawnPoint");
-        if (spawnPoint != null)
+        if (availableSpawnpoints.Count == 0)
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = spawnPoint.position; // Teleport the player to the spawn point
+            Debug.LogWarning("No available spawnpoints found!");
+            return;
         }
-        else
-        {
-            Debug.LogError("No spawn point found in the new room.");
-        }
-    }
 
-    void SpawnItemsInRoom(GameObject room)
-    {
-        if (itemPrefabs.Length > 0)
-        {
-            GameObject itemPrefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
-            Vector3 spawnPosition = room.transform.position; // Modify this as needed
-            Instantiate(itemPrefab, spawnPosition, Quaternion.identity, room.transform);
-        }
+        int randomIndex = Random.Range(0, availableSpawnpoints.Count);
+        Transform randomSpawnpoint = availableSpawnpoints[randomIndex];
+
+        playerTransform.position = randomSpawnpoint.position;
     }
 }
