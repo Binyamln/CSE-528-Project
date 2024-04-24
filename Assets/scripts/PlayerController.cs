@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float dashDistance = 10.0f; // Distance of the dash
     public float dashCooldown = 1.0f; // Time between dashes
     public int health = 100; // Player's health as an integer
+    public int damage = 10; // Player's damage as integer
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -53,6 +54,17 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player is dead!"); // Handle player death 
             
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Health") {
+            health += 10;
+            Debug.Log("Health: " + health);
+        }
+        if (collision.tag == "Speed") {
+            speed += 0.2f;
+            Debug.Log("Speed: " + speed);
         }
     }
 }
