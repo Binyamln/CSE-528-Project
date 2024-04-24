@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     public float dashDistance = 10.0f; // Distance of the dash
     public float dashCooldown = 1.0f; // Time between dashes
     public int health = 100; // Player's max health as an integer
-    public int current_health = 100; // Player's total health as integer
-    public int damage = 10; // Player's damage as integer
+    public int current_health = 100; // Player's current health as an integer
+    public int damage = 10; // Player's damage as an integer
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = moveInput * speed;
+        transform.rotation = Quaternion.Euler(0, 0, 0); // Keep rotation at zero
     }
 
     private void Dash()
@@ -54,18 +55,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-     public void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
         {
             SceneManager.LoadScene(sceneName: "DeathScreen");
             Debug.Log("Player is dead!"); // Handle player death 
-            
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.tag == "Health") {
             health += 10;
             current_health = health;
