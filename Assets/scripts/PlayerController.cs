@@ -30,10 +30,6 @@ public class PlayerController : MonoBehaviour
         moveInput.y = Input.GetAxisRaw("Vertical");
         moveInput.Normalize();
         animator.SetFloat("MoveX", moveInput.x);
-        if (Input.GetKeyDown(KeyCode.Return))  // Use key to initiate swing
-        {
-        sword.GetComponent<SwordController>().InitiateSwing(moveInput);
-        }
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastDashTime + dashCooldown)
         {
             Dash();

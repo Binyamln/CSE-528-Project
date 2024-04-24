@@ -3,49 +3,50 @@ using System.Collections;
 
 public class SwordController : MonoBehaviour
 {
-    public float swingDuration = 0.3f;  // Time it takes to complete the swing animation
-    public float visibleDelay = 0.5f;   // Time the sword remains visible after swinging
+    public Transform player;  // Reference to the player transform
+    public float distanceFromPlayer = 1.0f;  // Fixed distance from the player
 
+    private Quaternion targetRotation;
     private bool isSwinging = false;
-    private Renderer swordRenderer;     
 
-    void Start()
-    {
-        swordRenderer = GetComponent<Renderer>(); 
-        swordRenderer.enabled = false;  // Start with the sword invisible
-    }
-
-    public void InitiateSwing(Vector2 direction)
+    void Update()
     {
         if (!isSwinging)
         {
-            StartCoroutine(SwingSword(direction));
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0; // Ensure the z-position is zero to keep the sword on the same plane as the player
+            
+            Vector3 direction = (mousePosition - player.position).normalized; // Get normalized direction from player to mouse
+            transform.position = player.position + direction * distanceFromPlayer; // Set position 1 unit away in the direction of the mouse
+            transform.up = direction; // Orient the sword to point towards the mouse
+        }
+
+        if (Input.GetMouseButtonDown(0) && !isSwinging)  // Check for left mouse button click to initiate swing
+        {
+            StartCoroutine(SwingSword());
         }
     }
 
-    IEnumerator SwingSword(Vector2 direction)
+    IEnumerator SwingSword()
     {
         isSwinging = true;
-        swordRenderer.enabled = true;  // Make the sword visible
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90; // Calculate the angle
-        Quaternion startRotation = Quaternion.Euler(0, 0, angle);
-        Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, -90);  // Rotate -90 degrees from the start
-
-        transform.rotation = startRotation; 
-
+        float swingAngle = 45f;  // Amount of degrees to swing
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, swingAngle);
+        float duration = 0.2f;  // Duration of the swing
         float elapsed = 0;
-        while (elapsed < swingDuration)
+
+        // Rotate the sword by 45 degrees
+        while (elapsed < duration)
         {
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / swingDuration);
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        transform.rotation = endRotation;  
-        yield return new WaitForSeconds(visibleDelay);  
-
-        swordRenderer.enabled = false;  // Make the sword invisible again
+        // Return the sword to follow the mouse after swing
         isSwinging = false;
+        transform.rotation = startRotation;
     }
 }
