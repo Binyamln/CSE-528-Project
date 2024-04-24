@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6332570783713276218}
   - component: {fileID: 193159865158718991}
   - component: {fileID: 1363486225401670069}
-  - component: {fileID: -8291194767439695217}
+  - component: {fileID: 7368705766541397112}
+  - component: {fileID: -1017596627331833293}
   m_Layer: 0
   m_Name: MikuEnemy
   m_TagString: Enemy
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3094107228294552329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0383, y: 0.0426, z: 0}
+  m_LocalPosition: {x: -0.902, y: -0.125, z: 0}
   m_LocalScale: {x: 0.9233045, y: 0.915037, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -131,7 +132,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-8291194767439695217
+--- !u!114 &7368705766541397112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,6 +149,34 @@ MonoBehaviour:
   moveSpeed: 2
   attackRange: 1.5
   goal: {fileID: 0}
-  speedItem: {fileID: 0}
-  healthItem: {fileID: 0}
-  damageItem: {fileID: 0}
+  items:
+  - {fileID: 8455253353311115856, guid: 9951916ab05c3514b8f5a54fe48379f1, type: 3}
+  - {fileID: 9182840980090019438, guid: bb93fb57c93b5364a83ceac8902f97dd, type: 3}
+  - {fileID: 6467262237756605607, guid: 308538a05c752ca4c8be79d61dfd5618, type: 3}
+--- !u!50 &-1017596627331833293
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094107228294552329}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
