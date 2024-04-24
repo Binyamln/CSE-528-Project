@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -1280283112561418349}
   - component: {fileID: -4063940249472522982}
   - component: {fileID: -8783093779448986509}
+  - component: {fileID: -7500133674750298421}
   m_Layer: 0
   m_Name: CrabEnemy
   m_TagString: Enemy
@@ -148,6 +149,25 @@ MonoBehaviour:
   moveSpeed: 2
   attackRange: 1.5
   goal: {fileID: 0}
-  speedItem: {fileID: 0}
-  healthItem: {fileID: 0}
-  damageItem: {fileID: 0}
+  items: []
+--- !u!114 &-7500133674750298421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825854483976657682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72b8c0303cc57d4a83fcca0d631d5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 30
+  current_health: 30
+  moveSpeed: 2
+  attackRange: 1.5
+  goal: {fileID: 0}
+  items:
+  - {fileID: 8455253353311115856, guid: 9951916ab05c3514b8f5a54fe48379f1, type: 3}
+  - {fileID: 9182840980090019438, guid: bb93fb57c93b5364a83ceac8902f97dd, type: 3}
+  - {fileID: 6467262237756605607, guid: 308538a05c752ca4c8be79d61dfd5618, type: 3}
