@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-     public GameObject sword;
+    public GameObject sword;
     private Animator animator;
     public float speed = 5.0f; // Speed of the player's movement
     public float dashDistance = 10.0f; // Distance of the dash
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
         moveInput.Normalize();
-        animator.SetFloat("MoveX", moveInput.x);
+        animator.SetFloat("moreX", moveInput.x);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastDashTime + dashCooldown)
         {
             Dash();

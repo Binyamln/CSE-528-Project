@@ -11,15 +11,13 @@ public class SwordController : MonoBehaviour
 
     void Update()
     {
-        if (!isSwinging)
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0; // Ensure the z-position is zero to keep the sword on the same plane as the player
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0; // Ensure the z-position is zero to keep the sword on the same plane as the player
             
-            Vector3 direction = (mousePosition - player.position).normalized; // Get normalized direction from player to mouse
-            transform.position = player.position + direction * distanceFromPlayer; // Set position 1 unit away in the direction of the mouse
-            transform.up = direction; // Orient the sword to point towards the mouse
-        }
+        Vector3 direction = (mousePosition - player.position).normalized; // Get normalized direction from player to mouse
+        transform.position = player.position + direction * distanceFromPlayer; // Set position 1 unit away in the direction of the mouse
+        transform.up = direction; // Orient the sword to point towards the mouse
 
         if (Input.GetMouseButtonDown(0) && !isSwinging)  // Check for left mouse button click to initiate swing
         {

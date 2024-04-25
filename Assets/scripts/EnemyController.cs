@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    private Animator animator;
     public static int totalEnemyCount = 0; // Static variable to keep track of total enemy count
     public int maxHealth = 10;
     public int current_health = 10;
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         timer = updateInterval;
 
@@ -26,6 +28,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        animator.SetFloat("EnemyX", destination.x);
+        animator.SetFloat("EnemyY", destination.y);
         if (current_health <= 0)
         {
             DestroyEnemyAndDropItem();
