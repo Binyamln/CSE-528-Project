@@ -8,11 +8,11 @@ public class PlayerController : MonoBehaviour
     public GameObject sword;
     private Animator animator;
     public float speed = 5.0f; // Speed of the player's movement
-    public float dashDistance = 10.0f; // Distance of the dash
+    public float dashDistance = 15.0f; // Distance of the dash
     public float dashCooldown = 1.0f; // Time between dashes
     public int health = 100; // Player's max health as an integer
     public int current_health = 100; // Player's current health as an integer
-    public int damage = 10; // Player's damage as an integer
+    public int damage = 2; // Player's damage as an integer
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Speed: " + speed);
         }
         if (collision.tag == "Damage") {
-            damage += 10;
+            damage += 5;
             Debug.Log("Damage: " + damage);
         }
         if (collision.tag == "Enemy") {

@@ -29,13 +29,13 @@ public class SwordController : MonoBehaviour
     {
         isSwinging = true;
 
-        float swingAngle = 75f;  // Amount of degrees to swing
+        float swingAngle = -180f;  // Amount of degrees to swing
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, swingAngle);
-        float duration = 0.5f;  // Duration of the swing
+        float duration = 0.2f;  // Duration of the swing
         float elapsed = 0;
 
-        // Rotate the sword by 45 degrees
+        // Rotate the sword by 180 degrees
         while (elapsed < duration)
         {
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed / duration);

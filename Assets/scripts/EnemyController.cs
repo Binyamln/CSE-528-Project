@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Sword"))
         {
-            current_health -= 10;
+            current_health -= 3;
             Debug.Log("Enemy Health: " + current_health);
         }
     }
